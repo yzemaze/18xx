@@ -3,7 +3,7 @@
 module Engine
   module Part
     class Base
-      attr_accessor :index, :tile
+      attr_accessor :index, :paths, :tile
 
       def id
         "#{tile.id}-#{index}"
@@ -39,6 +39,10 @@ module Engine
 
       def tokened_by?(_corporation)
         false
+      end
+
+      def init_paths
+        @paths = (0..5).map { |r| [r, []] }.to_h
       end
 
       def city?

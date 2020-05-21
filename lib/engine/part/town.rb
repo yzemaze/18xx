@@ -12,6 +12,7 @@ module Engine
 
       def initialize(revenue)
         @revenue = parse_revenue(revenue)
+        init_paths
       end
 
       def town?

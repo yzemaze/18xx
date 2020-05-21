@@ -126,6 +126,7 @@ module Engine
 
       tag_parts
       separate_parts
+      tag_nodes_with_paths
     end
 
     def id
@@ -299,6 +300,12 @@ module Engine
       @junctions = @paths.map(&:junction)
       @edges = @paths.flat_map(&:edges)
       @stops = @paths.map(&:stop).compact
+    end
+
+    def tag_nodes_with_paths
+      @paths.reject { |p| p.node.nil? }.each do |p|
+        p.node.paths[rotation] << p
+      end
     end
   end
 end

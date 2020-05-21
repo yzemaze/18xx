@@ -17,7 +17,7 @@ module Engine
         @slots = slots.to_i
         @tokens = Array.new(@slots)
         @reservations = []
-        @connected_edges = {}
+        init_paths
       end
 
       def remove_tokens!
@@ -77,7 +77,7 @@ module Engine
 
       # returns Array[Integer] of all edges that this city are connected to
       def connected_edges
-        @connected_edges[tile.rotation] ||= tile.paths.select { |p| p.city == self }.flat_map(&:exits).sort
+        paths[tile.rotation].flat_map(&:exits).sort
       end
     end
   end

@@ -78,6 +78,8 @@ module Engine
               new_edges = city.connected_edges
               old_edges & new_edges == old_edges
             end
+            raise GameError, "no new city on #{tile.id} found for #{id}" if new_city.nil?
+
             [old_city, new_city]
           end.to_h
         end
