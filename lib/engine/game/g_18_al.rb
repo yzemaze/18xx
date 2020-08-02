@@ -26,6 +26,7 @@ module Engine
       ROUTE_BONUSES = %i[atlanta_birmingham mobile_nashville].freeze
 
       OPTIONAL_RULES = [
+        { sym: :double_yellow_first_or, desc: '7a: Allow corporation to lay 2 yellows its first OR' },
       ].freeze
 
       include CompanyPrice50To150Percent
@@ -37,6 +38,8 @@ module Engine
       end
 
       def setup
+        @previously_floated_corporations = []
+
         setup_company_price_50_to_150_percent
 
         begin
@@ -56,6 +59,14 @@ module Engine
       end
 
       def operating_round(round_num)
+        @newly_floated_corporations = []
+        @corporations.each do |c|
+          next if !c.floated? || @previously_floated_corporations.include?(c)
+
+          @newly_floated_corporations << c
+          @previously_floated_corporations << c
+        end if @optional_rules&.include?(:double_yellow_first_or)
+
         Round::Operating.new(self, [
           Step::Bankrupt,
           Step::DiscardTrain,
@@ -137,6 +148,13 @@ module Engine
         @hexes
           .select { |hex| hexes_to_clear.include?(hex.name) && exclude != hex.name }
           .each { |hex| hex.tile.icons = [] }
+      end
+
+      def tile_lays(entity)
+        return super if !@optional_rules&.include?(:double_yellow_first_or) ||
+          !@newly_floated_corporations&.include?(entity)
+
+        [{ lay: true, upgrade: true }, { lay: true, upgrade: :not_if_upgraded }]
       end
 
       private
