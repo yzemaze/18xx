@@ -16,21 +16,22 @@ module View
     needs :refreshing, default: nil, store: true
 
     def render
-      your_games, other_games = @games.partition { |game| user_in_game?(@user, game) }
+      grouped = {}
+      grouped['personal'], other_games = @games.partition { |game| user_in_game?(@user, game) }
 
       children = [
         render_header,
-        h(Welcome, show_intro: your_games.size < 2),
+        h(Welcome, show_intro: grouped['personal'].size < 2),
         h(Chat, user: @user, connection: @connection),
       ]
 
       # these will show up in the profile page
-      your_games.reject! { |game| game['status'] == 'finished' }
+      grouped['personal'].reject! { |game| game['status'] == 'finished' }
 
-      grouped = other_games.group_by { |game| game['status'] }
+      grouped.merge!(other_games.sort_by { |game| -game['updated_at'] }.group_by { |game| game['status'] })
 
       # Ready, then active, then unstarted, then completed
-      your_games.sort_by! do |game|
+      grouped['personal'].sort_by! do |game|
         [
           user_is_acting?(@user, game) ? -game['updated_at'] : 0,
           game['status'] == 'active' ? -game['updated_at'] : 0,
@@ -39,22 +40,28 @@ module View
         ]
       end
 
-      hotseat = Lib::Storage
+      grouped['hotseat'] = Lib::Storage
         .all_keys
         .select { |k| k.start_with?('hs_') }
         .map { |k| Lib::Storage[k] }
         .sort_by { |gd| gd[:id] }
         .reverse
 
-      render_row(children, 'Your Games', your_games, :personal) if @user
-      render_row(children, 'Hotseat Games', hotseat, :hotseat) if hotseat.any?
-      render_row(children, 'New Games', grouped['new'], :new) if @user
-      render_row(children, 'Active Games', grouped['active'], :active)
-      render_row(children, 'Finished Games', grouped['finished'], :finished)
+      %w[personal hotseat new active finished].each do |status|
+        next unless (title = Lib::Storage["#{status}_filter_title"]) && grouped[status]
+
+        grouped[status].select! { |game| game['title'] == title }
+      end
+
+      render_row(children, 'Your Games', grouped['personal'], :personal) if @user && grouped['personal']
+      render_row(children, 'Hotseat Games', grouped['hotseat'], :hotseat) if grouped['hotseat']
+      render_row(children, 'New Games', grouped['new'], :new) if @user && grouped['new']
+      render_row(children, 'Active Games', grouped['active'], :active) if grouped['active']
+      render_row(children, 'Finished Games', grouped['finished'], :finished) if grouped['finished']
 
       game_refresh
 
-      acting = your_games.any? { |game| user_is_acting?(@user, game) }
+      acting = grouped['personal'].any? { |game| user_is_acting?(@user, game) }
       `document.title = #{(acting ? '* ' : '') + '18xx.Games'}`
       change_favicon(acting)
       change_tab_color(acting)
@@ -93,7 +100,7 @@ module View
     end
 
     def render_header
-      h('div#greeting.card_header', [
+      h('div#greeting', [
         h(:h2, "Welcome#{@user ? ' ' + @user['name'] : ''}!"),
       ])
     end

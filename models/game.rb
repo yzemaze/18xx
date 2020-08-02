@@ -8,8 +8,6 @@ class Game < Base
   one_to_many :game_users
   many_to_many :players, class: :User, right_key: :user_id, join_table: :game_users
 
-  QUERY_LIMIT = 13
-
   STATUS_QUERY = <<~SQL
     SELECT %<status>s_games.*
     FROM (
@@ -17,8 +15,6 @@ class Game < Base
       FROM games
       WHERE status = '%<status>s'
       ORDER BY created_at DESC
-      LIMIT #{QUERY_LIMIT}
-      OFFSET :%<status>s_offset * #{QUERY_LIMIT - 1}
     ) %<status>s_games
   SQL
 
@@ -32,8 +28,6 @@ class Game < Base
       WHERE g.status = '%<status>s'
         AND ug.id IS NULL
       ORDER BY g.created_at DESC
-      LIMIT #{QUERY_LIMIT}
-      OFFSET :%<status>s_offset * #{QUERY_LIMIT - 1}
     ) %<status>s_games
   SQL
 
@@ -51,7 +45,6 @@ class Game < Base
       JOIN user_games ug
         ON g.id = ug.id
       ORDER BY g.id DESC
-      LIMIT 1000
     ) personal_games
   SQL
 
