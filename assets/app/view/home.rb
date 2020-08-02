@@ -89,15 +89,7 @@ module View
     end
 
     def render_row(children, header, games, type)
-      return unless games&.any?
-
-      children << h(
-        GameRow,
-        header: header,
-        game_row_games: games,
-        type: type,
-        user: @user,
-      )
+      children << h(GameRow, header: header, game_row_games: games, type: type, user: @user)
     end
 
     def render_header
