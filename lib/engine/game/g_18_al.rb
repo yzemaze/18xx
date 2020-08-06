@@ -160,7 +160,7 @@ module Engine
         return super if !@optional_rules&.include?(:double_yellow_first_or) ||
           !@newly_floated_corporations&.include?(entity)
 
-        [{ lay: true, upgrade: true }, { lay: true, upgrade: :not_if_upgraded }]
+        [{ lay: true, upgrade: true }, { lay: :not_if_upgraded, upgrade: false }]
       end
 
       private
