@@ -9,28 +9,34 @@ module View
     needs :user, default: nil, store: true
 
     def render
-      other_links = [item('About', '/about')]
-
       if @user
-        other_links << item("Profile (#{@user['name']})", '/profile')
+        games_links = [item('Your Games', '/?games=personal&status=active')]
+        other_links = [item("Profile (#{@user['name']})", '/profile')]
       else
-        other_links << item('Signup', '/signup')
+        games_links = []
+        other_links = [item('Signup', '/signup')]
         other_links << item('Login', '/login')
       end
 
+      games_links << item('All Games', '/?games=all&status=new')
+      other_links << item('About', '/about')
+
       props = {
         style: {
-          display: 'flex',
+          display: 'grid',
+          grid: '1fr / auto 1fr',
           marginBottom: '1rem',
           paddingBottom: '1vmin',
           boxShadow: '0 2px 0 0 gainsboro',
-          justifyContent: 'space-between',
         },
       }
 
       h('div#header', props, [
         h(Logo),
-        render_other_links(other_links),
+        h(:div, [
+          render_links(games_links, 'games_nav'),
+          render_links(other_links, 'main_nav'),
+        ]),
       ])
     end
 
@@ -46,8 +52,8 @@ module View
       h(:a, props, name)
     end
 
-    def render_other_links(other_links)
-      children = other_links.map do |link|
+    def render_links(links, nav_id)
+      children = links.map do |link|
         link
       end
 
@@ -56,7 +62,7 @@ module View
           margin: 'auto 0',
         },
       }
-      h('div#nav', nav_props, children)
+      h("nav##{nav_id}", nav_props, children)
     end
   end
 end
