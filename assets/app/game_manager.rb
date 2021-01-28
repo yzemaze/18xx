@@ -121,7 +121,7 @@ module GameManager
 
     game_url = url(game)
     store(:game_data, game.merge(loading: true), skip: true)
-    store(:app_route, game_url + `window.location.search`)
+    store(:app_route, game_url + `window.location.search.replace(/games=[a-z]+\&status=[a-z]+/, '')`)
 
     @connection.safe_get(game_url) do |data|
       next `window.location = #{game_url}` if data.dig('settings', 'pin')
