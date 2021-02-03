@@ -10,7 +10,6 @@ module View
     include GameManager
 
     needs :header
-    needs :game, default: nil, store: true
     needs :game_row_games
     needs :status, default: 'active'
     needs :type
@@ -19,7 +18,6 @@ module View
     LIMIT = 12
 
     def render
-      store(:game, nil) # wipe vestige of previously loaded game to prevent error when interacting with new games
       h('div#games_list', { key: @header, style: { minHeight: '70rem' } }, [
         render_header(@header),
         *render_row,
