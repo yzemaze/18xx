@@ -1,7 +1,12 @@
 require: rubocop-performance
 
+# TODO: check for defaults and remove obsolete
+
 AllCops:
   TargetRubyVersion: 3.0
+
+Gemspec/DateAssignment:
+  Enabled: true
 
 Layout/EndOfLine:
   EnforcedStyle: lf
@@ -45,6 +50,9 @@ Lint/AmbiguousAssignment:
 Lint/ConstantDefinitionInBlock:
   Enabled: true
 
+Lint/DeprecatedConstants:
+  Enabled: true
+
 Lint/DuplicateBranch:
   Enabled: true
 
@@ -60,16 +68,34 @@ Lint/EmptyClass:
 Lint/FloatComparison:
   Enabled: true
 
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+
 Lint/MissingSuper: # TODO enable & check offenses
   Enabled: false
 
 Lint/NoReturnInBeginEndBlocks:
   Enabled: true
 
+Lint/NumberedParameterAssignment:
+  Enabled: true
+
+Lint/OrAssignmentToConstant:
+  Enabled: true
+
+Lint/RedundantDirGlobSort: # (new in 1.8)
+  Enabled: true
+
 Lint/RedundantSafeNavigation:
   Enabled: true
 
+Lint/SymbolConversion:
+  Enabled: true
+
 Lint/ToEnumArguments:
+  Enabled: true
+
+Lint/TripleQuotes:
   Enabled: true
 
 Lint/UnexpectedBlockArity:
@@ -220,10 +246,16 @@ Style/DocumentDynamicEvalDefinition:
 Style/EmptyCaseCondition:
   Enabled: false
 
+Style/EndlessMethod:
+  Enabled: true
+
 Style/ExplicitBlockArgument:
   Enabled: true
 
 Style/HashAsLastArrayItem:
+  Enabled: true
+
+Style/HashConversion:
   Enabled: true
 
 # unsafe, problems with 1860
@@ -241,6 +273,9 @@ Style/HashTransformKeys:
   Enabled: true
 
 Style/HashTransformValues:
+  Enabled: true
+
+Style/IfWithBooleanLiteralBranches:
   Enabled: true
 
 Style/MultipleComparison:
