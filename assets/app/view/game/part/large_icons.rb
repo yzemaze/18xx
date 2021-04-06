@@ -11,6 +11,12 @@ module View
 
         needs :game, default: nil, store: true
 
+        P_CENTER = {
+          region_weights: CENTER,
+          x: 0,
+          y: 0,
+        }.freeze
+
         P_WIDE_LEFT_CORNER = {
           region_weights: [5, 6, 7, 12, 13, 14],
           x: -60,
@@ -90,12 +96,15 @@ module View
                                 P_WIDE_UPPER_RIGHT_CORNER,
                                 P_WIDE_BOTTOM_RIGHT_CORNER].freeze
 
-        POINTY_LARGE_ITEM_LOCATIONS = [PP_WIDE_LEFT_CORNER,
-                                       PP_WIDE_UPPER_LEFT_CORNER,
-                                       PP_WIDE_BOTTOM_LEFT_CORNER,
-                                       PP_WIDE_RIGHT_CORNER,
-                                       PP_WIDE_UPPER_RIGHT_CORNER,
-                                       PP_WIDE_BOTTOM_RIGHT_CORNER].freeze
+        POINTY_LARGE_ITEM_LOCATIONS = [
+          P_CENTER,
+          PP_WIDE_LEFT_CORNER,
+          PP_WIDE_UPPER_LEFT_CORNER,
+          PP_WIDE_UPPER_RIGHT_CORNER,
+          PP_WIDE_RIGHT_CORNER,
+          PP_WIDE_BOTTOM_LEFT_CORNER,
+          PP_WIDE_BOTTOM_RIGHT_CORNER,
+        ].freeze
 
         LARGE_RADIUS = 25
         DELTA_X = (LARGE_RADIUS * 2) + 2

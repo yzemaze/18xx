@@ -51,20 +51,54 @@ module View
           y: 0,
         }.freeze
 
+        PP_EDGE1 = {
+          region_weights: [12, 13, 19],
+          # x: -55,
+          # y: 30,
+          x: -50,
+          y: 25,
+        }.freeze
+
+        PP_EDGE4 = {
+          region_weights: [4, 10, 11],
+          x: 50,
+          y: -28,
+        }.freeze
+
+        PP_TOP_CORNER = {
+          region_weights: [0, 1, 2, 6],
+          x: -35,
+          y: -60,
+        }.freeze
+
         SIZE = 20
         WATER_PATH = 'M -15 -7 Q -7.5 -15, 0 -7 S 7.5 1, 15 -7M -15 -2  Q -7.5 -10, 0 -2  S 7.5 6, 15 -2'
         TRIANGLE_PATH = '0,20 10,0 20,20'
 
         def preferred_render_locations
-          [
-            P_CENTER,
-            P_TOP_RIGHT_CORNER,
-            P_EDGE2,
-            P_BOTTOM_LEFT_CORNER,
-            P_RIGHT_CORNER,
-            P_LEFT_CORNER,
-            P_BOTTOM_RIGHT_CORNER,
-          ]
+          if layout == :flat
+            [
+              P_CENTER,
+              P_TOP_RIGHT_CORNER,
+              P_LEFT_CORNER,
+              P_EDGE2,
+              P_BOTTOM_LEFT_CORNER,
+              P_RIGHT_CORNER,
+              P_BOTTOM_RIGHT_CORNER,
+            ]
+          else
+            [
+              P_CENTER,
+              P_TOP_RIGHT_CORNER,
+              PP_TOP_CORNER,
+              P_RIGHT_CORNER,
+              PP_EDGE4,
+              PP_EDGE1,
+              P_EDGE2,
+              P_LEFT_CORNER,
+              P_BOTTOM_LEFT_CORNER,
+            ]
+          end
         end
 
         def render_part
