@@ -16,18 +16,18 @@ module View
         end
 
         def preferred_render_locations
-          return [l_center, l_up24, l_down24] if @tile.offboards.any?
+          return [l_center, l_down24, l_up24] if @tile.offboards.any?
 
-          return [l_center, l_up40, l_down40] if @tile.towns.one? && @tile.cities.empty?
+          return [l_center, l_down40, l_up40] if @tile.towns.one? && @tile.cities.empty?
 
           if @tile.cities.one? && @tile.towns.empty?
             return case @tile.cities.first.slots
                    when 3
                      [l_down50, l_top]
                    when 4
-                     [l_top, l_bottom]
+                     [l_bottom, l_top]
                    else
-                     [l_center, l_up40, l_down40, l_down24]
+                     [l_center, l_down40, l_up40, l_down24]
                    end
           end
 
@@ -71,13 +71,13 @@ module View
             # top or bottom
             if layout == :pointy && (@tile.cities.size > 2 ||
                 @tile.towns.one? && edge_at_bottom?(@tile.preferred_city_town_edges[@tile.towns[0]]))
-              return [center, l_up40, l_down40, l_bottom, l_top]
+              return [center, l_down40, l_up40, l_bottom, l_top]
             end
 
             # if pointy map, or no exits and no cities, avoid very top or bottom
-            return [center, l_up40, l_down40] if layout == :pointy || @tile.exits.empty? && @tile.cities.empty?
+            return [center, l_down40, l_up40] if layout == :pointy || @tile.exits.empty? && @tile.cities.empty?
 
-            return [center, l_up40, l_down40, l_bottom, l_top]
+            return [center, l_down40, l_up40, l_bottom, l_top]
           end
 
           @tile.parts.reject { |p| p.path? || p.border? }.any? ? [l_down40] : [l_center]
