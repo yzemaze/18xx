@@ -13,7 +13,7 @@ module View
         SINGLE_CITY_ONE_SLOT = {
           flat: {
             region_weights: { (LEFT_MID + LEFT_CORNER) => 1, LEFT_CENTER => 0.5 },
-            x: -55,
+            x: -71.25,
             y: 0,
           },
           pointy: {
@@ -26,7 +26,7 @@ module View
         SINGLE_CITY_ONE_SLOT_RIGHT = {
           flat: {
             region_weights: { (RIGHT_MID + RIGHT_CORNER) => 1, RIGHT_CENTER => 0.5 },
-            x: 55,
+            x: 71.25,
             y: 0,
           },
           pointy: {
