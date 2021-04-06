@@ -155,7 +155,7 @@ module Engine
                       'path=a:4,b:_0;border=edge:2;border=edge:4,type:water,cost:80',
             %w[D26] => 'border=edge:0;border=edge:2,type:divider',
             %w[E25] => 'path=a:1,b:5;path=a:2,b:5;border=edge:3;border=edge:5',
-            %w[F26] => 'city=revenue:yellow_20|green_40|brown_80|gray_100,groups:Springfield,loc:2;' \
+            %w[F26] => 'city=revenue:yellow_20|green_40|brown_80|gray_100,groups:Springfield;' \
                        'path=a:1,b:_0;path=a:2,b:_0;border=edge:2',
             %w[F0] => 'offboard=revenue:yellow_10|green_20|brown_50|gray_100,groups:Jamestown,hide:1;' \
                       'path=a:4,b:_0;border=edge:3,type:divider;border=edge:5',
