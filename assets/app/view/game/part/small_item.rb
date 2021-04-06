@@ -36,6 +36,18 @@ module View
           y: 60.62,
         }.freeze
 
+        P_WIDE_TOP_CORNER = {
+          region_weights: [0, 1, 2, 3, 4],
+          x: 0,
+          y: -65,
+        }.freeze
+
+        P_WIDE_BOTTOM_CORNER = {
+          region_weights: [19, 20, 21, 22, 23],
+          x: 0,
+          y: 65,
+        }.freeze
+
         PP_BOTTOM_RIGHT_CORNER = {
           region_weights: Base::RIGHT_CORNER,
           x: 65,
@@ -82,18 +94,6 @@ module View
           region_weights: [13, 14],
           x: -60,
           y: 0,
-        }.freeze
-
-        P_WIDE_TOP_CORNER = {
-          region_weights: [0, 1, 2, 3, 4],
-          x: 0,
-          y: -65,
-        }.freeze
-
-        P_WIDE_BOTTOM_CORNER = {
-          region_weights: [19, 20, 21, 22, 23],
-          x: 0,
-          y: 65,
         }.freeze
 
         PP_WIDE_TOP_CORNER = {
@@ -144,9 +144,9 @@ module View
                                 P_UPPER_LEFT_CORNER,
                                 P_BOTTOM_LEFT_CORNER].freeze
 
-        POINTY_SMALL_ITEM_LOCATIONS = [PP_LEFT_CORNER,
+        POINTY_SMALL_ITEM_LOCATIONS = [PP_TOP_CORNER,
+                                       PP_LEFT_CORNER,
                                        PP_RIGHT_CORNER,
-                                       PP_TOP_CORNER,
                                        PP_BOTTOM_CORNER,
                                        PP_UPPER_LEFT_CORNER,
                                        PP_BOTTOM_LEFT_CORNER,
