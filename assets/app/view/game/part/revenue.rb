@@ -32,9 +32,9 @@ module View
         POINTY_MULTI_REVENUE_LOCATIONS =
           [
             {
-              region_weights: { CENTER => 1.5 },
+              region_weights: { [9, 14, 7, 8] => 1.5 },
               x: 0,
-              y: 0,
+              y: -23,
             },
             {
               region_weights: { [2, 6, 7, 8] => 1.5, [3, 5] => 0.5 },
