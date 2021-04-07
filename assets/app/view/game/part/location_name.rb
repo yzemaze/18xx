@@ -19,7 +19,7 @@ module View
           return [l_center, l_down24] if @tile.offboards.any?
 
           if @tile.towns.one? && @tile.cities.empty? && !@tile.towns.first&.loc
-            return [l_center, l_up40, l_down40, l_down50] if layout == :flat && !@tile.exits.empty?
+            return [l_center, l_up40, l_down40, l_down(55)] if layout == :flat && !@tile.exits.empty?
 
             return [l_center, l_down24, l_down40, l_up24, l_up40]
           end
@@ -27,9 +27,9 @@ module View
           if @tile.cities.one? && @tile.towns.empty?
             return case @tile.cities.first.slots
                    when 3
-                     [l_down50, l_top]
+                     layout == :pointy ? [l_down(52)] : [l_down(50), l_top]
                    when 4
-                     [l_bottom, l_top]
+                     layout == :pointy ? [l_down(58)] : [l_bottom, l_top]
                    else
                      [l_center, l_down40, l_up40, l_down24]
                    end
@@ -86,7 +86,7 @@ module View
               return [center]
             end
 
-            return [center, l_down40, l_up40, l_down50, l_bottom, l_top]
+            return [center, l_down40, l_up40, l_down(50), l_down(55), l_bottom, l_top]
           end
 
           @tile.parts.reject { |p| p.path? || p.border? }.any? ? [l_down40] : [l_center]
@@ -296,8 +296,8 @@ module View
           loc
         end
 
-        def l_down50
-          loc = { x: 0, y: 50 }
+        def l_down(y)
+          loc = { x: 0, y: y }
 
           loc[:region_weights_in] = { TRACK_TO_EDGE_0 => 1, BOTTOM_ROW => 0.1 }
           loc[:region_weights_out] = { BOTTOM_ROW => 1 }
@@ -308,7 +308,7 @@ module View
           y = if @name_segments.size > 1
                 39
               else
-                layout == :flat ? 56 : 65
+                layout == :flat ? 62 : 65
               end
 
           loc = { x: 0, y: y + delta_y }
