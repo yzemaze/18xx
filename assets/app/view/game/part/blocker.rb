@@ -29,6 +29,11 @@ module View
           y: 60,
         }.freeze
 
+        PP_TOP_CORNER = {
+          region_weights: { [0, 1] => 1.0 },
+          x: -31,
+          y: -50,
+        }.freeze
         PP_LEFT_CORNER = {
           region_weights: LEFT_CORNER,
           x: -65,
@@ -45,7 +50,6 @@ module View
           x: -50,
           y: 30,
         }.freeze
-
         PP_EDGE_4 = {
           region_weights_in: { [10] => 1, [4, 11] => 0.5 },
           region_weights_out: [10],
@@ -65,8 +69,8 @@ module View
             ]
           else
             [
+              PP_TOP_CORNER,
               P_LEFT_CORNER,
-              PP_BOTTOM_RIGHT,
               PP_EDGE_4,
               PP_EDGE_1,
             ]
