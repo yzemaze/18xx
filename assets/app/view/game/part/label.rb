@@ -76,11 +76,32 @@ module View
         }.freeze
 
         MULTI_CITY_LOCATIONS = [
+          P_LEFT_CORNER[:flat],
+          P_RIGHT_CORNER[:flat],
+          # top right corner
+          {
+            region_weights: { UPPER_RIGHT_CORNER => 1.0 },
+            x: 40,
+            y: -65,
+          },
+          # top left corner
+          {
+            region_weights: { UPPER_LEFT_CORNER => 1.0 },
+            x: -40,
+            y: -65,
+          },
           # top center
           {
             region_weights: { [2] => 1.0, [1, 3] => 0.5 },
             x: 0,
             y: -60,
+          },
+          P_BOTTOM_LEFT_CORNER[:flat],
+          # bottom right corner
+          {
+            region_weights: { BOTTOM_RIGHT_CORNER => 1.0 },
+            x: 40,
+            y: 65,
           },
           # edge 2
           {
@@ -93,27 +114,6 @@ module View
             region_weights: { [17] => 1.0, [16, 18] => 0.5 },
             x: 50,
             y: 37,
-          },
-          # top left corner
-          {
-            region_weights: { UPPER_LEFT_CORNER => 1.0 },
-            x: -40,
-            y: -65,
-          },
-          # top right corner
-          {
-            region_weights: { UPPER_RIGHT_CORNER => 1.0 },
-            x: 40,
-            y: -65,
-          },
-          P_LEFT_CORNER[:flat],
-          P_RIGHT_CORNER[:flat],
-          P_BOTTOM_LEFT_CORNER[:flat],
-          # bottom right corner
-          {
-            region_weights: { BOTTOM_RIGHT_CORNER => 1.0 },
-            x: 40,
-            y: 65,
           },
           # edge 1
           {
