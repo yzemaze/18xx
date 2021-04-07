@@ -19,7 +19,7 @@ module View
           return [l_center, l_down24] if @tile.offboards.any?
 
           if @tile.towns.one? && @tile.cities.empty? && !@tile.towns.first&.loc
-            return [l_center, l_down24, l_down40, l_up24, l_up40, l_bottom, l_top] if layout == :flat
+            return [l_center, l_up40, l_down40, l_down50] if layout == :flat && !@tile.exits.empty?
 
             return [l_center, l_down24, l_down40, l_up24, l_up40]
           end
