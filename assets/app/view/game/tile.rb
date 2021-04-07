@@ -67,11 +67,11 @@ module View
         # OO tiles have different rules...
         rendered_loc_name = render_tile_part(Part::LocationName) if @tile.location_name && @tile.cities.size > 1
         children << render_tile_part(Part::Revenue) if render_revenue
-        @tile.labels.each { |x| children << render_tile_part(Part::Label, label: x) }
 
         children << render_tile_part(Part::Upgrades) unless @tile.upgrades.empty?
         children << render_tile_part(Part::Blocker)
         rendered_loc_name = render_tile_part(Part::LocationName) if @tile.location_name && (@tile.cities.size <= 1)
+        @tile.labels.each { |x| children << render_tile_part(Part::Label, label: x) }
         @tile.reservations.each { |x| children << render_tile_part(Part::Reservation, reservation: x) }
         large, normal = @tile.icons.partition(&:large)
         children << render_tile_part(Part::Icons) unless normal.empty?

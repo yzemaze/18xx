@@ -9,33 +9,6 @@ module View
       class Label < Base
         needs :label
 
-        # left of center
-        SINGLE_CITY_ONE_SLOT = {
-          flat: {
-            region_weights: { (LEFT_MID + LEFT_CORNER) => 1, LEFT_CENTER => 0.5 },
-            x: -71.25,
-            y: 0,
-          },
-          pointy: {
-            region_weights: { [5, 6] => 1.0, [7, 12] => 0.25 },
-            x: -65,
-            y: 0,
-          },
-        }.freeze
-        # right of center
-        SINGLE_CITY_ONE_SLOT_RIGHT = {
-          flat: {
-            region_weights: { (RIGHT_MID + RIGHT_CORNER) => 1, RIGHT_CENTER => 0.5 },
-            x: 71.25,
-            y: 0,
-          },
-          pointy: {
-            region_weights: { [17, 18] => 1.0, [11, 16] => 0.25 },
-            x: 65,
-            y: 0,
-          },
-        }.freeze
-
         P_LEFT_CORNER = {
           flat: {
             region_weights: { LEFT_CORNER => 1.0 },
@@ -74,6 +47,26 @@ module View
             y: 61,
           },
         }.freeze
+
+        SINGLE_CITY_ONE_SLOT = [
+          P_LEFT_CORNER[:flat],
+          P_RIGHT_CORNER[:flat],
+        ].freeze
+
+        POINTY_SINGLE_CITY_ONE_SLOT = [
+          {
+            region_weights: { [5, 6, 12] => 1.0 },
+            x: -67,
+            y: 0,
+          },
+          P_RIGHT_CORNER[:pointy],
+          {
+            region_weights: { [13, 14] => 1.0, [12, 19] => 0.25 },
+            x: -50,
+            y: 31,
+          },
+          P_BOTTOM_LEFT_CORNER[:pointy],
+        ].freeze
 
         MULTI_CITY_LOCATIONS = [
           P_LEFT_CORNER[:flat],
@@ -194,7 +187,7 @@ module View
             if @tile.cities.one? && (@tile.cities.first.slots > 1)
               [P_LEFT_CORNER[layout]]
             else
-              [SINGLE_CITY_ONE_SLOT[layout], SINGLE_CITY_ONE_SLOT_RIGHT[layout]]
+              layout == :flat ? SINGLE_CITY_ONE_SLOT : POINTY_SINGLE_CITY_ONE_SLOT
             end
           elsif @tile.city_towns.size > 1 && layout == :flat
             MULTI_CITY_LOCATIONS
