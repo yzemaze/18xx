@@ -226,8 +226,8 @@ module View
 
           if layout == :flat
             loc[:region_weights] = {
-              [0, 2, 4, 6, 8, 10] => 0.7,
-              [1, 3] => 0.2,
+              [0, 2, 4, 8] => 0.7,
+              [1, 3, 6, 10] => 0.2,
               [7, 9] => 0.1,
             }
           else
@@ -283,8 +283,8 @@ module View
           case layout
           when :flat
             loc[:region_weights] = {
-              [13, 15, 17, 19, 21, 23] => 0.7,
-              [20, 22] => 0.2,
+              [15, 19, 21, 23] => 0.7,
+              [13, 17, 20, 22] => 0.2,
               [14, 16] => 0.1,
             }
           when :pointy
