@@ -43,7 +43,7 @@ module View
             y: 0,
           },
           pointy: {
-            region_weights: { LEFT_CORNER => 1.0 },
+            region_weights: { LEFT_CORNER => 1.0, [6, 13] => 0.25 },
             x: -67,
             y: 0,
           },
@@ -56,7 +56,7 @@ module View
             y: 0,
           },
           pointy: {
-            region_weights: { RIGHT_CORNER => 1.0 },
+            region_weights: { RIGHT_CORNER => 1.0, [10, 17] => 0.25 },
             x: 67,
             y: 0,
           },
@@ -69,7 +69,7 @@ module View
             y: 65,
           },
           pointy: {
-            region_weights: { BOTTOM_LEFT_CORNER => 1.0 },
+            region_weights: { BOTTOM_LEFT_CORNER => 1.0, [13, 21] => 0.25 },
             x: -30,
             y: 61,
           },
@@ -130,27 +130,33 @@ module View
         ].freeze
 
         POINTY_MULTI_CITY_LOCATIONS = [
-          # top center
-          {
-            region_weights: { [2] => 1.0, [3] => 0.5 },
-            x: 0,
-            y: -60,
-          },
           P_LEFT_CORNER[:pointy],
+          # upper right corner
+          {
+            region_weights: { UPPER_RIGHT_CORNER => 1.0, [2, 10] => 0.25 },
+            x: 31,
+            y: -50,
+          },
+          P_RIGHT_CORNER[:pointy],
           # edge 2
           {
-            region_weights: { [6] => 1.0, [5] => 0.25 },
+            region_weights: { [6] => 1.0, [0, 1, 5] => 0.25 },
             x: -50,
-            y: -31,
+            y: -37,
           },
           # edge 1
           {
-            region_weights: { [13, 14] => 1.0 },
+            region_weights: { [13] => 1.0, [12, 19] => 0.25 },
             x: -50,
-            y: 25,
+            y: 31,
+          },
+          # edge 3
+          {
+            region_weights: { [2] => 1.0, [0, 1, 3] => 0.25 },
+            x: 0,
+            y: -65,
           },
           P_BOTTOM_LEFT_CORNER[:pointy],
-          P_RIGHT_CORNER[:pointy],
           # edge 4
           {
             region_weights: { [10] => 1.0, [4, 11] => 0.25 },
@@ -159,9 +165,27 @@ module View
           },
           # edge 5
           {
-            region_weights: { [17] => 1.0, [18] => 0.25 },
+            region_weights: { [17] => 1.0, [18, 22, 23] => 0.25 },
             x: 50,
             y: 37,
+          },
+          # edge 0
+          {
+            region_weights: { [21] => 1.0, [20, 22, 23] => 0.25 },
+            x: 0,
+            y: 65,
+          },
+          # top corner
+          {
+            region_weights: { UPPER_LEFT_CORNER => 1.0, [2, 6] => 0.25 },
+            x: -31,
+            y: -50,
+          },
+          # bottom corner
+          {
+            region_weights: { BOTTOM_RIGHT_CORNER => 1.0, [17, 21] => 0.25 },
+            x: 31,
+            y: 50,
           },
         ].freeze
 
