@@ -136,19 +136,13 @@ module View
             x: 0,
             y: -60,
           },
+          P_LEFT_CORNER[:pointy],
           # edge 2
           {
             region_weights: { [6] => 1.0, [5] => 0.25 },
             x: -50,
             y: -31,
           },
-          # top left corner
-          {
-            region_weights: { UPPER_LEFT_CORNER => 1.0 },
-            x: -30,
-            y: -65,
-          },
-          P_LEFT_CORNER[:pointy],
           # edge 1
           {
             region_weights: { [13, 14] => 1.0 },
@@ -156,21 +150,16 @@ module View
             y: 25,
           },
           P_BOTTOM_LEFT_CORNER[:pointy],
-          # top right corner
-          {
-            region_weights: { UPPER_RIGHT_CORNER => 1.0, [2] => 0.5 },
-            x: 30,
-            y: -65,
-          },
+          P_RIGHT_CORNER[:pointy],
           # edge 4
           {
             region_weights: { [10] => 1.0, [4, 11] => 0.25 },
-            x: 67,
-            y: 0,
+            x: 50,
+            y: -25,
           },
           # edge 5
           {
-            region_weights: { [17] => 1.0, [18, 23] => 0.25 },
+            region_weights: { [17] => 1.0, [18] => 0.25 },
             x: 50,
             y: 37,
           },
