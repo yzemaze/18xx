@@ -86,7 +86,7 @@ module View
               return [center]
             end
 
-            return [center, l_down40, l_up40, l_bottom, l_top]
+            return [center, l_down40, l_up40, l_down50, l_bottom, l_top]
           end
 
           @tile.parts.reject { |p| p.path? || p.border? }.any? ? [l_down40] : [l_center]
