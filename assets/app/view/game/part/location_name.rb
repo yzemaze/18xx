@@ -18,10 +18,11 @@ module View
         def preferred_render_locations
           return [l_center, l_down24] if @tile.offboards.any?
 
-          return [l_bottom, l_top] if @tile.towns.one? && @tile.cities.empty? &&
-            (([1, 4] - @tile.exits).empty? || ([2, 5] - @tile.exits).empty?)
+          if @tile.towns.one? && @tile.cities.empty? && !@tile.towns.first&.loc
+            return [l_center, l_down24, l_down40, l_up24, l_up40, l_bottom, l_top] if layout == :flat
 
-          return [l_center, l_down40] if @tile.towns.one? && @tile.cities.empty?
+            return [l_center, l_down24, l_down40, l_up24, l_up40]
+          end
 
           if @tile.cities.one? && @tile.towns.empty?
             return case @tile.cities.first.slots
@@ -34,7 +35,7 @@ module View
                    end
           end
 
-          if @tile.city_towns.size > 1
+          if @tile.city_towns.size > 1 || @tile.towns.first&.loc
             center = l_center
 
             # if top and bottom edges are both used, we might end up rendering the
@@ -42,10 +43,10 @@ module View
             if ([0, 3] - @tile.exits).empty?
               width, = box_dimensions
               shift = 79 - (width / 2)
-              if ([1, 2] - @tile.exits).empty?
+              if [1, 2].intersection(@tile.exits).empty?
+                center[:x] -= shift
+              elsif [4, 5].intersection(@tile.exits).empty?
                 center[:x] += shift
-              elsif ([4, 5] - @tile.exits).empty?
-                center[:x] - shift
               end
             end
 
@@ -79,6 +80,11 @@ module View
 
             # if pointy map, or no exits and no cities, avoid very top or bottom
             return [center, l_down40, l_up40] if layout == :pointy || @tile.exits.empty? && @tile.cities.empty?
+
+            if layout == :flat && @tile.cities.empty? && ([0, 3] - @tile.exits).empty? &&
+              (@tile.towns.first&.loc || @tile.towns.size > 1 && center[:x] != 0)
+              return [center]
+            end
 
             return [center, l_down40, l_up40, l_bottom, l_top]
           end
@@ -221,7 +227,8 @@ module View
           if layout == :flat
             loc[:region_weights] = {
               [0, 2, 4, 6, 8, 10] => 0.7,
-              [1, 3, 7, 9] => 0.2,
+              [1, 3] => 0.2,
+              [7, 9] => 0.1,
             }
           else
             # slight extra nudge to clear the revenue circle
@@ -277,7 +284,8 @@ module View
           when :flat
             loc[:region_weights] = {
               [13, 15, 17, 19, 21, 23] => 0.7,
-              [14, 16, 20, 22] => 0.2,
+              [20, 22] => 0.2,
+              [14, 16] => 0.1,
             }
           when :pointy
             loc[:region_weights] = {
