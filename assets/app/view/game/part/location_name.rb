@@ -42,7 +42,7 @@ module View
             # name in the middle, so try to shift out of the way of track
             if ([0, 3] - @tile.exits).empty?
               width, = box_dimensions
-              shift = 79 - (width / 2)
+              shift = 75 - (width / 2)
               if [1, 2].intersection(@tile.exits).empty?
                 center[:x] -= shift
               elsif [4, 5].intersection(@tile.exits).empty?
